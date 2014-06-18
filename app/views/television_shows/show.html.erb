@@ -6,5 +6,54 @@
 </ul>
 
 <div>
-  <%= @television_show.synopsis %>
+<h4> Synopsis: </h4>
+<%= @television_show.synopsis %>
 </div>
+
+<br>
+
+<table style="width:300px">
+  <tr>
+    <th>Role</th>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <% @television_show.characters.each do |character| %>
+      <td><%= character.role %></td>
+      <td><%= character.name %></td>
+      <td><%= character.description %></td>
+    <% end %>
+  </tr>
+</table>
+
+<h3>Add a Character</h3>
+
+<% if @character.errors.any? %>
+    <ul>
+      <% @character.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+<%= form_for [@television_show, @character] do |f| %>
+
+  <div>
+    <%= f.label :role %>
+    <%= f.text_field :role %>
+  </div>
+
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <%= f.submit 'Submit' %>
+<% end %>
+
